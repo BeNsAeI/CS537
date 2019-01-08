@@ -28,11 +28,10 @@ Class Structure:
 - Notes/slides: On canvas
 
 - Syllabus: On canvas
-
 - Attendance: 
 
 - Assignments: 
- - Mini projects based on deep learning
+ * Mini projects based on deep learning
  - HW is an individual effort
  - Use any help online
  - Submission: On canvas

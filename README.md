@@ -31,7 +31,8 @@ Class Structure:
 - Attendance: 
 
 - Assignments: 
- * Mini projects based on deep learning
+ - Mini projects based on deep learning
+ - Report results, and explain what steps were taken and why
  - HW is an individual effort
  - Use any help online
  - Submission: On canvas

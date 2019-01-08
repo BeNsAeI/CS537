@@ -1,0 +1,51 @@
+Image Filtering and Harris Corners:
+- We try to reduce complexity first:
+ - find features
+  - Keypoints (SIFT, HOG)
+  - Edge contures, curves, shapes, boundries
+  - Regions
+  - Tectures
+
+
+Filtering:
+- Corelation or convolution or filtering:
+- filter can be smaller or bigger than the image
+- elementwise product
+\[g(x,y) \sum^a_{i=-a} \sum^b_{j=-b} w(i,j)f(x+i, y+j)\]
+
+example:
+- Average filter:
+ - spacial averageing
+ - weighted averaging
+
+image gradient:
+ - Deprecated: Detect edges
+ \[I_x(x,y) = I(x+1, y) - I(x,y)\]
+
+Laplacian:
+ - Apply gradient filter twice
+ - second gradient on top of first one
+
+Harris corners:
+- Locality: robust tp noise
+- Saliency: rich visual cue
+- Stable under transforms
+- Distinctiveness: 
+- Efficiency: easy to compute
+
+Method of corner detection:
+- 3 states:
+ - homogenous region
+  - no change in any direction
+ - edge
+  - nno change along edges
+ - corner
+  - changes in all directions
+
+Equation:
+\[M(x,y) = w(x,y) \times (\grad f(x,y))^2\]
+- $M(x,y)$ : pixel variation 2x2
+- $ w(x,y)$: Smoothing filter
+- $\grad f(x,y))^2$ squared image gradient
+- we will find a ratio
+ - frac{\lambda_1 \lambda_2}{\lambda_1 + \lambda_2} = frac{det(M)}{trace(M)}

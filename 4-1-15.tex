@@ -1,0 +1,95 @@
+there are twosteps:
+1: coming up with filters
+2: how to combine the results
+
+* could be done manually (harris or hessian corners) or it coud be automated (CNNs)
+
+\[k = (x,y)\]
+\[net_k = w_k . x + b_k\]
+\[ = \sum w_{(x,y)}(m,n) x(x-m, y-n) + b_{x,y}\]
+
+- $net_k$ is a linear function of input
+ - we need this to incorporate the weights into our computation, this is where learning happens
+- $f(net_k)$ denotes the non linearaty function
+ - in our case we use sigmoid, this is for activation purpose
+
+* this is very similar to what we do with neurons!
+* there are two parts:
+ * Feature extractions (CNNs)
+ * Classification (full connected MLP)
+  * we can use any classifier for this step (might as well use neurons for this too)
+
+* conv 1 -> sub sampling 1 -> conv 2 -> sub sampling -> connected MLP
+ * in each conv layer we train a full set of filter (several neural layers)
+ * in each sub sampling we are combining pixels for each layer
+ * sometimes on top of sub sampling we have normalization
+
+Multilayer perceptron:
+\[a ^L_k = f(net^L_k) = f(w^L_k . a ^ {L-1} + b^L_k)\]
+- $a: activation$
+- $L: layer$
+- $k: image index$
+- simple
+
+
+CNN:
+- each layer has 3 levels:
+ - convolutional
+ - regularization
+ - poolling
+- can have m x n out puts (pixel labling and segmentation)
+ - or it can have 1 output: if a concept is present or not
+
+\[net^l_k = b^l_k + \sum_{m,n} w^l_k(m,n) a^{l-1}_k(m,n)\]
+- $a: activation$
+- m,n parameters of the latyer
+
+each layer:
+* conv stage -> non linear stage -> regularization -> pooling
+* $ net_k \rightarrowf (net_k) \rightarrow reg \rightarrow  a^l_{frac{k}{2}} $
+
+Pooling:
+ \[a^l_{frac{k}{2}} = max_{k' \in N(k)} v^l_{k'}\]
+- This takes every other activation value
+- this helps us to not care where the object s located (we are only looking for max)
+ - helps us to analyze images in different scales
+  - This is done to  reduce the amount of parameters that need to be computed
+  - it also helps with overfitting
+
+Learning:
+- Optimize:
+\[\hat{W} = opt_{W_\hat{y}} F_W(X)\]
+- Optimization step:
+ - $J_W(\hat{y}, y)$
+- so we need to minimize this
+ - $min_W J_W(\hat{y}, y)$
+
+- we can use MSE (mean squared error)
+ - $frac{1}{n} \times \sum_k|| \hat{y}_k - y_k ||^2$
+ - $J(W) = \frac{1}{N}\sum^N_{n=1}(\frac{1}{2}\sum_k(t_{k,n} - a^L_{k,n})^2)$
+ - $t$ is target or $y$
+ - $a$ is activation or $\hat{y}$
+
+Gradient Decent
+- Optimally we can compute the derivative of this and set it to 0 to find optimal wights $\hat{W}$
+- Unforttunately for our case we can't get exact so we need to use gradient decent
+\[W^{(\tao + 1)} = W^{(\tao)} - \n \frax{\derivative J}{\derivative W}\]
+- initial $W$ is usually random, but ideally you want to get that from a network that is trained on a different data
+- the we use back propegation to apply the adjustment of the gradient decent
+- Two important steps in grad decent for CNNs:
+ - Forward pass (look at "each layer" + above equation)
+ - Back propegation
+
+Generalizing back propegation:
+- $W$: all possible weights on NN edges
+- $E$: $J$ or error
+- previously we showed $a^L_k = f()net^L_k$ where $net^L_k = ...$
+- $\grad_{a^L_k} E() = - (t_k - a^L_k)$
+- $\grad_{net^L_k} a^l_k$
+- $\grad_{w^L_{kj}} net^L_k$
+
+* w^L_{kj} = w^L_{kj} - \n\delta^L_k a^{L-1}_j
+
+- Now we need to do that to previous layers and use chain rule:
+- we add all derivatives (result of the multiplication of 3 derivatives)
+- Look at slides 4 for this madness

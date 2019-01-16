@@ -1,0 +1,70 @@
+Recap:
+- Fltering: 
+ - lineear spacial filtering
+ - $f(x,y) * w(x,y) = f'(x,y)$ Note it is $*$ and not $\times$
+  - element wise product
+  - filter = kernel = detector
+- interest points= keypoints = points
+ - clues for detection
+ - could be a texture
+ - could be a feaeture
+- We use point detectors to achieve this
+ - Harris points are a type of detector
+  - $f(x+1,y) - f(x,y) \aproximate \grad_x f(x,y$)
+  - we call this $D_x$
+  - Harris checks this in atleast 2 directions
+  - D_x
+  - Question: wouldn't D_x be out filter?
+  - Harris corner becomes:
+   - $grad_x f(x,y)^2$
+   - igen values:
+    - frac{\lambda_1 \lambda_2}{\lambda_1 + \lambda_2} = frac{det(M)}{trace(M)}
+  - Question: Do we have to  solve for $\lambda$ every time? Yes!
+  - The ratio's comparison threshold is a hyper paramete
+  - we need to fiddle with it to find the best results
+ - Questions: Does larger matrix affect the spacing between our edges? Yes, it affects the behavior of the detector
+
+- Hessian:
+ - Same as Harris, but uses second derivative of the image
+
+- SIFT detector
+ - come up with a better filter
+ - $D(x,y;\sigma) = DoG(x,y;\sigma)$
+  - DoG: difference of $Gaussian = G(x,y,k\sigma) - G(x,y; \sigma)$
+  - $\sigma = scale$
+  - $g(x,y;\sigma) = \frac{1}{\sqrt{2\pi}\sigma} exp ...$
+
+HOMEWORK 1:
+- Task: detect interest points in a set of images
+- compute descripotrs of this point
+- Resources: VLFeat.org
+- There are a lot of preperation that goes into HW1
+-Deep learning in CV:
+ - Keypoint detection:
+  - How do we come up with different hyper parameters?
+   - We use Deep learning
+  - Pass image f to a DCNN
+  - CNN will provide either: 
+   - a list of x,y locations of keypoints
+   - a 2d map of confidence scores
+-Training:
+ - Lets have function CNN
+ - CNN maps f(x,y) to some output
+ - CNN does this based on a training set
+ - for each mistake we have a loss
+ - we compute the loss and use the signal to correct the network
+ - training is iterative
+
+CNNs:
+- Non linear image Filtering
+- k = (x,y) location in image
+\[net_k = w_k \dot x + b_k = \sum_{m,n}w_{(x,y)}(m,n)x(x - m, y - n) + b_{x,y}\]
+- activation function: $w_k \dot x + b_k$
+ - filter, and bias
+- activation function could be
+ - sigmoid: $f(net_k) = \frac{1}{1 + exp(-net_k)}$
+ - piecewise: $net, net \geq 0\ OR\ 0, net \< 0$
+ - x is a pixel intensity
+- Now filtering is orgenized in layers
+ - each layer produces a different filter
+- We get convolutional layers and a classification layers

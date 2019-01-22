@@ -1,0 +1,68 @@
+Recap:
+- Point in an image $\rightarrow$ feature and is called a keypoint
+- Traditional feature detection methods:
+ - Harris corner
+  - Spread of pixel variation in sorrounding pixels:
+  - $M(x,y) \Rightarrow \frac{\lambda_1 \lambda_2}{\lambda_1 + \lambda_2}$
+  - where lambdas are eigen values
+  - what if both or sum of lambdas are 0?
+  - how to handle positive and negative lambdas?
+  - for each pixel we come up with a score on how likely it is to be a corner from 0 to 1
+ - hessian
+ - sift
+ ** Learn how they work
+
+CNN:
+ - Loss: if prediction is different from ground truth, incurr a loss
+ - Stocastic gradient decent
+\[w^t = w^{t-1} - \eta \frac{\partial loss(w)}{\partial w}\]
+
+- $\eta$ is important because the functions we are working with are highly non convex!
+- We don't actually use SGD, instead we use ADAM (adjust learning rate as algorithm progresses based on the results)
+ - $\eta$ is a function of loss and modified by ADAM
+
+Feature:
+- Feature vector
+- Point descriptor
+- descirbes properties of the neighboring points
+- allows us to perform highlevel tasks
+- SIFT: descriptor (not the detector)
+- SURF
+- FREAK
+- LBP
+- HOG
+- BRISK
+
+* They all work on the same basis:  Capture description of pixel gradients
+- For example:
+ - SIFT is the histogram of all directions from center
+  - Gradient of each point is computed as:
+  - [I(x+1, y) - I(x,y), I(x, y+1) - I(x,y)]
+  - Pixel values
+ - LBP: Locally Binary pattern
+  - used a lot in face recognition
+  - Pick the interest point, if neighbors are larger get 1 in their place and 0 otherwise
+
+Multi-loss:
+\[L(w) = L_{ce}(w) + \lambda \times L_{tripple}(w)\]
+- Tripple loss:
+\[\sum_n \sum_l(anchor_{l,n}, positive\ anchor_{l,n}, negative\ anchor_{l,n},)\]
+ 
+- max(0, (distance of "+") - (distance of "-") + margin)
+
+Deeper look in layers:
+- Layer 1: input layer
+
+- Layer 2: Batch normalization 
+ - Normalize output of past layer
+  - mini-batch mean: $\mu_{beta} \leftarrow$
+  - mini-batch variance: $\sigma^2_}\beta} \leftarrow \frac{}1{m}\sum^m_{i=1}(x_i - \mu_{\beta})^2$
+  - normalize: $\frac{x_i - \mu_{\beta}}{\sqrt(\sigma^2_{\beta}+\epsilon)}$
+  - scale and shift
+
+- Layer 2: Drop-out
+ - regularization method to avoid overfitting
+ - for each mini-batch:
+  - randomly set weights to 0
+ - This can apply to input and output neurons as well as well
+

@@ -1,0 +1,70 @@
+Homework 1:
+part 1:
+- use a traditional method to find 200 strongest keypoints
+- save the x,y coordinates of each one of the 5 images
+- Describe the features:
+ - [r,g,b]
+ - 32x32 patch around it
+ - 3 patches 1 for eeach channel
+Part 2:
+- Come up with 3 CNNs using pytorch:
+ - n, n + 2, n + 4 convolutional layers
+ - Training:
+  - skeleton code
+  - Our data needs to be orgenized in mini-batches
+   - we pick a subset that fits in memory
+   - it is randomly selected
+   - for each mini-batch, back propegate
+   - epoch:
+    - covering entire data set
+   - 32 items in each mini-batch
+  - We do not have loss
+   - instead we have a triplet loss over N data
+   - in data set we orgenize patches to make triplets
+ - Run
+  - Feed the patches to the CNNs
+  - skeleton code
+- we are trying to improve the training loss in architecture 2s and 3s
+
+Training:
+- Gradient decent:
+\[w^L_ji \leftarrow w^L_ji - \eta \delta^L_j a^{L-1}_i\]
+- $\delta$ is the propegation of gradient from all paretns of j
+\[\delta^L_j = [\sum_k \delta^{L+1}_kw^{L+1}_{kj}]\frac{\partial a^L_j}{\partial net^L_j}\]
+- for sigmoid:
+\[\delta^L_j = [\sum_k \delta^{L+1}_kw^{L+1}_{kj}] a^L_j (1-a^L_j)\]
+\begin{ps}
+1: forward pass:
+ - compute all activation @$\{a^L_1 ... a^L_j\}$@
+2: Back propegate
+ - Compute \delta, 
+  - 2 things to compute: the derivative of the function
+ - adjust weights
+\end{ps}
+
+Pelican setup:
+- ssh saeedib@pelican01.eecs.oregonstate.edu
+- create a folder under scratch saeedib
+- make a link
+- install conda
+- use miniconda
+
+cs to your folder
+- wget miniconda
+- bash Miniconda3-latest-Linux-x86-64.sh
+source ~/.bashrc
+
+conda create -n myenv
+
+jupyterLab
+
+jupyter notebook --generate-config
+jupyter notebook password
+
+check the slides
+
+Questions:
+0- How do we find the very first delta
+1- I did not received email
+2- Can I try the code on my own syste
+

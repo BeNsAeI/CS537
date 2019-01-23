@@ -1,0 +1,10 @@
+/data/*
+/data/sets/*
+/data/sets/liberty/*
+/data/sets/notredame/*
+/data/sets/yosemite/*
+/data/sets/*.pt
+/data/**/*.pt
+/data/**/*.bmp
+/data/**/*.txt
+/data/**/*.db

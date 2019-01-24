@@ -1,0 +1,20 @@
+Matching: 
+\[M = \{(f,f'):(f,f')\subseteq V \times V'\}\]
+- such that it minimizes the cost:
+\[\hat{M} = \min_{M \in m} \sum_{(f,f')\in M} d(f,f')\]
+
+- $d(f,f') = ||f-f'||^2_2$
+- If the $f$ matches to more than one member in $V'$, that matching is illegal.
+
+Linearization of matching:
+- $x(f,f') = 1$ if $6(f,f') \in M$ and $0$ otherwise
+
+\[ \hat{x} = \min_{x\in\{0,1\}^{n.n'}}\sum_{(f,f')\in V\times V'} d(f,f')x(f,f') = \min_{x\in\{0,1\}^{n.n'}}d^Tx\]
+
+- remember that if we don't find any matching: $x = [0,0,0,...,0]$, This is an illegal solution
+- mAtrix notation:
+\[ \hat{X} = \min_{X\in\{0,1\}^{n.n'}}\sum_{(f,f')\in V\times V'} d(f,f')x(f,f') = \min_{X\in\{0,1\}^{n.n'}} trace(D^TX)\]
+- Trace: 
+- subject to $\forall f \in V: \sum_{f'\in V} x(f,f') = 1$
+- and       $\forall f' \in V': \sum_{f\in V} x(f,f') = 1$
+

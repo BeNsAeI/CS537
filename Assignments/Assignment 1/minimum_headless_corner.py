@@ -8,39 +8,53 @@ extention = 'jpg'
 #global_threshold = 0.00125
 global_threshold = 0.001
 global_count = 200
-step = 0.00025
+step = 0.0025
+coord_tolerance = 10
+torch_limit = 1200
 def callibrate(Output):
     threshold = global_threshold
     count = 0
     coords = []
-    while count > 210 or count < 200:
+    while count > 4000 or count < 300:
         count = len(Output[Output > threshold*Output.max()])
         if count > global_count:
             threshold += step
         elif count < global_count:
             threshold -= step
+        print(threshold)
     print("Threshold found: " + str(threshold) + ", count is: " + str(count))
-    for i in range(0,len(Output)):
-        print ("-")
-        for j in range(0,len(Output[i])):
-            if (Output[i][j]>threshold*Output.max()):
-                print("appending " + str([i,j]))
-                coords.append([i,j])
+    index = np.where(Output>threshold*Output.max())
+    coords = zip(index[0], index[1])
+    #print(coords)
+    #print(len(coords))
     return coords
 def main():
     for i in range (1, 6):
+        i = 4
         path = './' + folder + '/' + filename + str(i) + '.' + extention
         print("Processing " + path + " ...")
         img = cv2.imread(path)
-        gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        gray = np.float32(gray)
-        harris = cv2.cornerHarris(gray,2,3,0.04)
+        blur = cv2.GaussianBlur(img,(5,5),0)
+        gray = cv2.cvtColor(blur,cv2.COLOR_BGR2GRAY)
+        edges = cv2.Canny(gray,128,256)
+        edges = np.float32(edges)
+        harris = cv2.cornerHarris(edges,2,3,0.04)
         Output = cv2.dilate(harris,None)
         coords = callibrate(Output)
         file = open('Points-' + str(i) +'.txt', 'w')
+        count = 1
+        x = 0
+        y = 0
         for i in coords:
-            string = "(" + str(i[0]) + ", " + str(i[1]) + ")\n"
-            file.write(string)
-            print(string)
+            if (i[0] < torch_limit and i[1] < torch_limit) and ((i[0] > x + coord_tolerance or i[0] < x - coord_tolerance) or (i[1] > y + coord_tolerance or i[1] < y - coord_tolerance)):
+                x = i[0]
+                y = i[1]
+                string = "(" + str(i[0]) + ", " + str(i[1]) + "),"
+                file.write(string)
+                count += 1
+            if count > 200:
+                break
+        print(count)
         file.close()
+        break
 if __name__ == '__main__': main()

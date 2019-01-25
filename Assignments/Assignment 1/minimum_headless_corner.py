@@ -29,7 +29,6 @@ def callibrate(Output):
     return coords
 def main():
     for i in range (1, 6):
-        i = 5
         path = './' + folder + '/' + filename + str(i) + '.' + extention
         print("Processing " + path + " ...")
         img = cv2.imread(path)

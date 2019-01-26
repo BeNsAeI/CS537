@@ -1,0 +1,3 @@
+CNN-3:
+[Epoch, Loss, Notredame accuracy, Yosemite accuracy]
+[0, 0.972550630569458, 0.33442, , 0.40794],

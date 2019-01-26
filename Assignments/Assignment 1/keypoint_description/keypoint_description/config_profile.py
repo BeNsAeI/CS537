@@ -11,7 +11,7 @@ class Config:
 args = Config()
 args.w1bsroot = 'data/sets/wxbs-descriptors-benchmark/code/'
 args.dataroot= 'data/sets/'
-args.enable_logging = False
+args.enable_logging = True #False
 args.load_random_triplets = False
 args.log_dir ='logs/'
 args.model_dir = 'models/'

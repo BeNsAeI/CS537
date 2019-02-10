@@ -1,0 +1,2 @@
+CNN-4:
+[Epoch, Loss, Notredame accuracy, Yosemite accuracy]
